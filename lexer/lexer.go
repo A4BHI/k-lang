@@ -1,59 +1,99 @@
 package main
 
+import "fmt"
+
+type Token struct {
+	Type    string
+	Literal string
+}
+
 type Lexer struct {
-	Source     string
+	Input      string
 	currentPos int
 	nextPos    int
 	ch         byte
 }
 
-var Out []string
-
 const (
-	MAKE  = "MAKE"
-	EQUAL = "EQUAL"
-	IF    = "IF"
-	PLUS  = "PLUS"
+	MAKE   = "MAKE"
+	IDENT  = "IDENT"
+	IF     = "IF"
+	ELSE   = "ELSE"
+	FOR    = "FOR"
+	WHILE  = "WHILE"
+	PLUS   = "PLUS"
+	MINUS  = "MINUS"
+	MULT   = "MULT"
+	DIV    = "DIV"
+	LBRAC  = "LBRAC"
+	RBRAC  = "RBRAC"
+	LPARAN = "LPARAN"
+	RPARAN = "RPARAN"
+	INT    = "INT"
+	EOF    = "EOF"
 )
 
-var Tokens = map[string]string{
-	"make": MAKE,
-	"if":   IF,
-	"plus": PLUS,
+var Keywords = map[string]string{
+	"make":  MAKE,
+	"if":    IF,
+	"else":  ELSE,
+	"for":   FOR,
+	"while": WHILE,
 }
-var s string
 
-func (l *Lexer) OutPut() {
-	for i := 0; i < len(l.Source); i++ {
-		if l.Source[i] == ' ' {
-			l.currentPos++
-		} else {
-			l.ch = l.Source[i]
-			b := handleOperators(l.ch)
-
-			if !b {
-				s += string(l.ch)
-
-			}
-
-		}
+func (l *Lexer) readChar() {
+	if l.nextPos >= len(l.Input) {
+		l.ch = 0
+	} else {
+		l.ch = l.Input[l.nextPos]
 	}
 
+	l.currentPos = l.nextPos
+	l.nextPos++
+
 }
 
-func handleOperators(op byte) bool {
-	switch op {
+func (l *Lexer) NextToken() Token {
+
+	var tok Token
+	switch l.ch {
 	case '+':
-		Out = append(Out, Tokens[string(op)])
-		return true
-		break
+		tok = Token{Type: PLUS, Literal: "+"}
+	case '-':
+		tok = Token{Type: MINUS, Literal: "-"}
+	case '*':
+		tok = Token{Type: MULT, Literal: "*"}
+	case '/':
+		tok = Token{Type: DIV, Literal: "/"}
 	default:
-		return false
+		if l.ch == 0 {
+			tok = Token{Type: EOF, Literal: ""}
+		}
+
 	}
-	return true
+	l.readChar()
+	return tok
+}
+
+func NewLexer(input string) *Lexer {
+	l := Lexer{Input: input}
+	l.readChar()
+	return &l
 }
 
 func main() {
-	// OutPut("make")
+	input := "+*-/"
+	l := NewLexer(input)
+	for {
+
+		tok := l.NextToken()
+		if tok.Type != EOF {
+			fmt.Printf("|%-10s -> |%q|\n", tok.Type, tok.Literal)
+		} else {
+			fmt.Printf("|%-10s -> |%q |\n", tok.Type, tok.Literal)
+			break
+		}
+
+	}
 
 }
