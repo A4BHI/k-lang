@@ -56,6 +56,9 @@ func (l *Lexer) readChar() {
 func (l *Lexer) NextToken() Token {
 
 	var tok Token
+	if l.ch == 0 {
+		return Token{Type: EOF, Literal: ""}
+	}
 	switch l.ch {
 	case '+':
 		tok = Token{Type: PLUS, Literal: "+"}
@@ -66,12 +69,11 @@ func (l *Lexer) NextToken() Token {
 	case '/':
 		tok = Token{Type: DIV, Literal: "/"}
 	default:
-		if l.ch == 0 {
-			tok = Token{Type: EOF, Literal: ""}
-		}
 
 	}
+
 	l.readChar()
+
 	return tok
 }
 
