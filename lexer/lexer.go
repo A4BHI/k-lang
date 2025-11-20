@@ -41,8 +41,16 @@ var Keywords = map[string]string{
 	"while": WHILE,
 }
 
+func (l *Lexer) SkipWhiteSpace() {
+	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
+		l.readChar()
+	}
+
+}
+
 func (l *Lexer) readChar() {
 	if l.nextPos >= len(l.Input) {
+
 		l.ch = 0
 	} else {
 		l.ch = l.Input[l.nextPos]
@@ -54,11 +62,13 @@ func (l *Lexer) readChar() {
 }
 
 func (l *Lexer) NextToken() Token {
-
+	l.SkipWhiteSpace()
 	var tok Token
+
 	if l.ch == 0 {
 		return Token{Type: EOF, Literal: ""}
 	}
+
 	switch l.ch {
 	case '+':
 		tok = Token{Type: PLUS, Literal: "+"}
@@ -84,7 +94,7 @@ func NewLexer(input string) *Lexer {
 }
 
 func main() {
-	input := "+*-/"
+	input := "  +*-/"
 	l := NewLexer(input)
 	for {
 
