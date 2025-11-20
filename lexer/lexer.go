@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Token struct {
 	Type    string
@@ -41,10 +43,27 @@ var Keywords = map[string]string{
 	"while": WHILE,
 }
 
-func (l *Lexer) SkipWhiteSpace() {
+func (l *Lexer) skipWhiteSpace() {
 	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
 		l.readChar()
 	}
+
+}
+
+func (l *Lexer) isDigit() bool {
+	if l.ch >= '0' && l.ch <= '9' {
+		return true
+	}
+	return false
+}
+
+func (l *Lexer) readDigits() Token {
+	var Digit string
+	for l.ch >= '0' && l.ch <= '9' {
+		Digit = Digit + string(l.ch)
+		l.readChar()
+	}
+	return Token{Type: INT, Literal: Digit}
 
 }
 
@@ -62,8 +81,14 @@ func (l *Lexer) readChar() {
 }
 
 func (l *Lexer) NextToken() Token {
-	l.SkipWhiteSpace()
 	var tok Token
+
+	l.skipWhiteSpace()
+
+	if l.isDigit() { //To Read DIGITS
+
+		return l.readDigits()
+	}
 
 	if l.ch == 0 {
 		return Token{Type: EOF, Literal: ""}
@@ -94,7 +119,7 @@ func NewLexer(input string) *Lexer {
 }
 
 func main() {
-	input := "  +*-/"
+	input := "  +*2-832/"
 	l := NewLexer(input)
 	for {
 
