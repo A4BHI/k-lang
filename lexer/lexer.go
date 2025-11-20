@@ -19,6 +19,7 @@ type Lexer struct {
 const (
 	MAKE   = "MAKE"
 	IDENT  = "IDENT"
+	FN     = "FN"
 	IF     = "IF"
 	ELSE   = "ELSE"
 	FOR    = "FOR"
@@ -27,6 +28,7 @@ const (
 	MINUS  = "MINUS"
 	MULT   = "MULT"
 	DIV    = "DIV"
+	ASSIGN = "ASSIGN"
 	LBRAC  = "LBRAC"
 	RBRAC  = "RBRAC"
 	LPARAN = "LPARAN"
@@ -37,6 +39,7 @@ const (
 
 var Keywords = map[string]string{
 	"make":  MAKE,
+	"fn":    FN,
 	"if":    IF,
 	"else":  ELSE,
 	"for":   FOR,
@@ -103,6 +106,16 @@ func (l *Lexer) NextToken() Token {
 		tok = Token{Type: MULT, Literal: "*"}
 	case '/':
 		tok = Token{Type: DIV, Literal: "/"}
+	case '=':
+		tok = Token{Type: ASSIGN, Literal: "="}
+	case '(':
+		tok = Token{Type: LBRAC, Literal: "("}
+	case ')':
+		tok = Token{Type: RBRAC, Literal: ")"}
+	case '{':
+		tok = Token{Type: LPARAN, Literal: "{"}
+	case '}':
+		tok = Token{Type: RPARAN, Literal: "}"}
 	default:
 
 	}
@@ -119,7 +132,7 @@ func NewLexer(input string) *Lexer {
 }
 
 func main() {
-	input := "  +*2-832/"
+	input := "(+)={*2}-832/"
 	l := NewLexer(input)
 	for {
 
