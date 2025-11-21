@@ -10,11 +10,13 @@ type IntegerLiteral struct {
 	Value int
 }
 
+func (in IntegerLiteral) expressionNode() {}
+
 type Node interface {
 	tokLiteral() string
 }
 
-type Statements interface {
+type Statement interface {
 	Node
 	statementNode()
 }
@@ -27,8 +29,14 @@ type CallExpression struct {
 	Parameters Expression
 }
 
+type InfinixExpression struct {
+	Left     Expression
+	Operator string
+	Right    Expression
+}
+
 type KLANG struct {
-	Statements []Statements
+	Statements []Statement
 }
 
 type MakeStatement struct {
@@ -37,3 +45,11 @@ type MakeStatement struct {
 }
 
 func (m MakeStatement) statementNode() {}
+
+type IfStatement struct {
+	Condition      Expression
+	TrueStatement  []Statement
+	FalseStatement []Statement
+}
+
+func (ifs IfStatement) statementNode() {}
