@@ -44,6 +44,8 @@ const (
 	GTEQUAL   = "GTEQUAL"
 	LT        = "LT"
 	GT        = "GT"
+	TRUE      = "TRUE"
+	FALSE     = "FALSE"
 	EOF       = "EOF"
 )
 
@@ -54,6 +56,8 @@ var Keywords = map[string]string{
 	"else":  ELSE,
 	"for":   FOR,
 	"while": WHILE,
+	"true":  TRUE,
+	"false": FALSE,
 }
 
 func (l *Lexer) peakCH() byte {
@@ -90,11 +94,27 @@ func (l *Lexer) readDigits() Token {
 }
 
 func (l *Lexer) isIdent() bool {
-	if l.ch >= 'a' && l.ch <= 'z' || l.ch >= 'A' && l.ch <= 'Z' {
+	if (l.ch >= 'a' && l.ch <= 'z') || (l.ch >= 'A' && l.ch <= 'Z') || (l.ch == '_') {
 		return true
 	}
 	return false
 }
+
+func (l *Lexer) readIdents() Token {
+	var word string
+	for (l.ch >= 'a' && l.ch <= 'z') || (l.ch >= 'A' && l.ch <= 'Z') || (l.ch == '_') {
+		word = word + string(l.ch)
+		l.readChar()
+	}
+
+	token, ok := Keywords[word]
+	if !ok {
+		return Token{Type: IDENT, Literal: word}
+	}
+
+	return Token{Type: token, Literal: word}
+}
+
 func (l *Lexer) readChar() {
 	if l.nextPos >= len(l.Input) {
 
@@ -119,7 +139,8 @@ func (l *Lexer) NextToken() Token {
 	}
 
 	if l.isIdent() {
-		fmt.Println("ALPHA")
+
+		return l.readIdents()
 	}
 
 	if l.ch == 0 {
@@ -205,8 +226,8 @@ func NewLexer(input string) *Lexer {
 
 func main() {
 
-	input := "(++)={*2}-832/+!=>!<a>=<="
-	l := NewLexer(input)
+	// input := "(++)={*2}-832/+!=>!<a>=<= make if"
+	l := NewLexer("make x = 10 \n if x == 10 {print(true)}")
 	for {
 
 		tok := l.NextToken()
