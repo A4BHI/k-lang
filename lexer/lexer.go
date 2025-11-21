@@ -40,8 +40,8 @@ const (
 	NOT       = "NOT"
 	NOTEQUAL  = "NOTEQUAL"
 	EQUAL     = "EQUAL"
-	LEQUAL    = "LEQUAL"
-	REQUAL    = "REQUAL"
+	LTEQUAL   = "LTEQUAL"
+	GTEQUAL   = "GTEQUAL"
 	LT        = "LT"
 	GT        = "GT"
 	EOF       = "EOF"
@@ -89,6 +89,12 @@ func (l *Lexer) readDigits() Token {
 
 }
 
+func (l *Lexer) isIdent() bool {
+	if l.ch >= 'a' && l.ch <= 'z' || l.ch >= 'A' && l.ch <= 'Z' {
+		return true
+	}
+	return false
+}
 func (l *Lexer) readChar() {
 	if l.nextPos >= len(l.Input) {
 
@@ -112,6 +118,10 @@ func (l *Lexer) NextToken() Token {
 		return l.readDigits()
 	}
 
+	if l.isIdent() {
+		fmt.Println("ALPHA")
+	}
+
 	if l.ch == 0 {
 		return Token{Type: EOF, Literal: ""}
 	}
@@ -128,6 +138,7 @@ func (l *Lexer) NextToken() Token {
 	case '-':
 		if l.peakCH() == '-' {
 			tok = Token{Type: DECREMENT, Literal: "--"}
+			l.readChar()
 		} else {
 			tok = Token{Type: MINUS, Literal: "-"}
 		}
@@ -135,6 +146,7 @@ func (l *Lexer) NextToken() Token {
 	case '*':
 		if l.peakCH() == '*' {
 			tok = Token{Type: POWER, Literal: "**"}
+			l.readChar()
 		} else {
 			tok = Token{Type: MULT, Literal: "*"}
 		}
@@ -143,8 +155,30 @@ func (l *Lexer) NextToken() Token {
 	case '=':
 		if l.peakCH() == '=' {
 			tok = Token{Type: EQUAL, Literal: "=="}
+			l.readChar()
 		} else {
 			tok = Token{Type: ASSIGN, Literal: "="}
+		}
+	case '!':
+		if l.peakCH() == '=' {
+			tok = Token{Type: NOTEQUAL, Literal: "!="}
+			l.readChar()
+		} else {
+			tok = Token{Type: NOT, Literal: "!"}
+		}
+	case '>':
+		if l.peakCH() == '=' {
+			tok = Token{Type: GTEQUAL, Literal: ">="}
+			l.readChar()
+		} else {
+			tok = Token{Type: GT, Literal: ">"}
+		}
+	case '<':
+		if l.peakCH() == '=' {
+			tok = Token{Type: LTEQUAL, Literal: "<="}
+			l.readChar()
+		} else {
+			tok = Token{Type: LT, Literal: "<"}
 		}
 	case '(':
 		tok = Token{Type: LBRAC, Literal: "("}
@@ -170,7 +204,8 @@ func NewLexer(input string) *Lexer {
 }
 
 func main() {
-	input := "(++)={*2}-832/+"
+
+	input := "(++)={*2}-832/+!=>!<a>=<="
 	l := NewLexer(input)
 	for {
 
