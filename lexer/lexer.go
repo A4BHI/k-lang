@@ -17,24 +17,34 @@ type Lexer struct {
 }
 
 const (
-	MAKE   = "MAKE"
-	IDENT  = "IDENT"
-	FN     = "FN"
-	IF     = "IF"
-	ELSE   = "ELSE"
-	FOR    = "FOR"
-	WHILE  = "WHILE"
-	PLUS   = "PLUS"
-	MINUS  = "MINUS"
-	MULT   = "MULT"
-	DIV    = "DIV"
-	ASSIGN = "ASSIGN"
-	LBRAC  = "LBRAC"
-	RBRAC  = "RBRAC"
-	LPARAN = "LPARAN"
-	RPARAN = "RPARAN"
-	INT    = "INT"
-	EOF    = "EOF"
+	MAKE      = "MAKE"
+	IDENT     = "IDENT"
+	FN        = "FN"
+	IF        = "IF"
+	ELSE      = "ELSE"
+	FOR       = "FOR"
+	WHILE     = "WHILE"
+	PLUS      = "PLUS"
+	MINUS     = "MINUS"
+	MULT      = "MULT"
+	DIV       = "DIV"
+	ASSIGN    = "ASSIGN"
+	LBRAC     = "LBRAC"
+	RBRAC     = "RBRAC"
+	LPARAN    = "LPARAN"
+	RPARAN    = "RPARAN"
+	INT       = "INT"
+	INCREMENT = "INCREMENT"
+	DECREMENT = "DECREMENT"
+	POWER     = "POWER"
+	NOT       = "NOT"
+	NOTEQUAL  = "NOTEQUAL"
+	EQUAL     = "EQUAL"
+	LEQUAL    = "LEQUAL"
+	REQUAL    = "REQUAL"
+	LT        = "LT"
+	GT        = "GT"
+	EOF       = "EOF"
 )
 
 var Keywords = map[string]string{
@@ -44,6 +54,15 @@ var Keywords = map[string]string{
 	"else":  ELSE,
 	"for":   FOR,
 	"while": WHILE,
+}
+
+func (l *Lexer) peakCH() byte {
+	if l.nextPos >= len(l.Input) {
+		return 0
+	}
+
+	return l.Input[l.nextPos]
+
 }
 
 func (l *Lexer) skipWhiteSpace() {
@@ -99,15 +118,34 @@ func (l *Lexer) NextToken() Token {
 
 	switch l.ch {
 	case '+':
-		tok = Token{Type: PLUS, Literal: "+"}
+
+		if l.peakCH() == '+' {
+			tok = Token{Type: INCREMENT, Literal: "++"}
+			l.readChar()
+		} else {
+			tok = Token{Type: PLUS, Literal: "+"}
+		}
 	case '-':
-		tok = Token{Type: MINUS, Literal: "-"}
+		if l.peakCH() == '-' {
+			tok = Token{Type: DECREMENT, Literal: "--"}
+		} else {
+			tok = Token{Type: MINUS, Literal: "-"}
+		}
+
 	case '*':
-		tok = Token{Type: MULT, Literal: "*"}
+		if l.peakCH() == '*' {
+			tok = Token{Type: POWER, Literal: "**"}
+		} else {
+			tok = Token{Type: MULT, Literal: "*"}
+		}
 	case '/':
 		tok = Token{Type: DIV, Literal: "/"}
 	case '=':
-		tok = Token{Type: ASSIGN, Literal: "="}
+		if l.peakCH() == '=' {
+			tok = Token{Type: EQUAL, Literal: "=="}
+		} else {
+			tok = Token{Type: ASSIGN, Literal: "="}
+		}
 	case '(':
 		tok = Token{Type: LBRAC, Literal: "("}
 	case ')':
@@ -132,7 +170,7 @@ func NewLexer(input string) *Lexer {
 }
 
 func main() {
-	input := "(+)={*2}-832/"
+	input := "(++)={*2}-832/+"
 	l := NewLexer(input)
 	for {
 
