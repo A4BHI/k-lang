@@ -1,8 +1,4 @@
-package main
-
-import (
-	"fmt"
-)
+package klang
 
 type Token struct {
 	Type    string
@@ -224,20 +220,20 @@ func NewLexer(input string) *Lexer {
 	return &l
 }
 
-func main() {
+// func main() {
 
-	// input := "(++)={*2}-832/+!=>!<a>=<= make if"
-	l := NewLexer("make x = 10 \n if x == 10 {print(true)}")
-	for {
+// 	// input := "(++)={*2}-832/+!=>!<a>=<= make if"
+// 	l := NewLexer("make x = 10 \n if x == 10 {print(true)}")
+// 	for {
 
-		tok := l.NextToken()
-		if tok.Type != EOF {
-			fmt.Printf("|%-10s -> |%q|\n", tok.Type, tok.Literal)
-		} else {
-			fmt.Printf("|%-10s -> |%q |\n", tok.Type, tok.Literal)
-			break
-		}
+// 		tok := l.NextToken()
+// 		if tok.Type != EOF {
+// 			fmt.Printf("|%-10s -> |%q|\n", tok.Type, tok.Literal)
+// 		} else {
+// 			fmt.Printf("|%-10s -> |%q |\n", tok.Type, tok.Literal)
+// 			break
+// 		}
 
-	}
+// 	}
 
-}
+// }
