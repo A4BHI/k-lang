@@ -55,9 +55,9 @@ type IfStatement struct {
 
 func (ifs IfStatement) statementNode() {}
 
-type whileStatement struct {
-	Condition  Expression
-	Statements []Statement
+type WhileStatement struct {
+	Condition Expression
+	Body      []Statement
 }
 
-func (while whileStatement) statementNode() {}
+func (while *WhileStatement) statementNode() {}
