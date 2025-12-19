@@ -61,3 +61,12 @@ type WhileStatement struct {
 }
 
 func (while *WhileStatement) statementNode() {}
+
+type ForStatement struct {
+	Initialization Statement
+	Condition      Expression
+	Updation       Statement
+	Body           []Statement
+}
+
+func (For *ForStatement) statementNode() {}
