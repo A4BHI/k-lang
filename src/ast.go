@@ -28,6 +28,12 @@ type FunctionCall struct {
 
 func (c *FunctionCall) expressionNode() {}
 
+type ExpressionStatement struct {
+	Expression Expression
+}
+
+func (ES ExpressionStatement) expressionNode() {}
+
 type InfixExpression struct {
 	Left     Expression
 	Operator string
