@@ -44,11 +44,23 @@ type Identifier struct {
 
 func (ident *Identifier) expressionNode() {}
 
+type BoolLiteral struct {
+	Value bool
+}
+
+func (b *BoolLiteral) expressionNode() {}
+
 type IntegerLiteral struct {
 	Value int
 }
 
 func (in *IntegerLiteral) expressionNode() {}
+
+type StringLiteral struct {
+	Value string
+}
+
+func (S *StringLiteral) expressionNode() {}
 
 type MakeStatement struct {
 	Name  *Identifier
