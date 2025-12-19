@@ -40,6 +40,22 @@ type InfixExpression struct {
 	Right    Expression
 }
 
+func (Infix InfixExpression) expressionNode() {}
+
+type PrefixExpression struct {
+	Operator   string
+	Expression Expression
+}
+
+func (Prefix PrefixExpression) expressionNode() {}
+
+type PostfixExpression struct {
+	Expression Expression
+	Operator   string
+}
+
+func (Postfix PostfixExpression) expressionNode() {}
+
 type KLANG struct {
 	Statements []Statement
 }
