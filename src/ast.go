@@ -32,7 +32,7 @@ type ExpressionStatement struct {
 	Expression Expression
 }
 
-func (ES ExpressionStatement) expressionNode() {}
+func (ES *ExpressionStatement) statementNode() {}
 
 type InfixExpression struct {
 	Left     Expression
@@ -40,21 +40,21 @@ type InfixExpression struct {
 	Right    Expression
 }
 
-func (Infix InfixExpression) expressionNode() {}
+func (In *InfixExpression) expressionNode() {}
 
 type PrefixExpression struct {
 	Operator   string
 	Expression Expression
 }
 
-func (Prefix PrefixExpression) expressionNode() {}
+func (Pre *PrefixExpression) expressionNode() {}
 
 type PostfixExpression struct {
 	Expression Expression
 	Operator   string
 }
 
-func (Postfix PostfixExpression) expressionNode() {}
+func (Post *PostfixExpression) expressionNode() {}
 
 type KLANG struct {
 	Statements []Statement
@@ -120,10 +120,10 @@ type AssignmentStatement struct {
 	Value Expression
 }
 
-func (Assignment AssignmentStatement) statementNode() {}
+func (Assignment *AssignmentStatement) statementNode() {}
 
 type ReturnStatement struct {
 	Expression Expression
 }
 
-func (Return ReturnStatement) statementNode() {}
+func (Return *ReturnStatement) statementNode() {}
