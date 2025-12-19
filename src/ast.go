@@ -13,18 +13,6 @@ type Expression interface {
 	expressionNode()
 }
 
-type Identifier struct {
-	Value string
-}
-
-func (ident *Identifier) expressionNode() {}
-
-type IntegerLiteral struct {
-	Value int
-}
-
-func (in *IntegerLiteral) expressionNode() {}
-
 type CallExpression struct {
 	Function   Expression
 	Parameters []Expression
@@ -39,6 +27,18 @@ type InfixExpression struct {
 type KLANG struct {
 	Statements []Statement
 }
+
+type Identifier struct {
+	Value string
+}
+
+func (ident *Identifier) expressionNode() {}
+
+type IntegerLiteral struct {
+	Value int
+}
+
+func (in *IntegerLiteral) expressionNode() {}
 
 type MakeStatement struct {
 	Name  *Identifier
