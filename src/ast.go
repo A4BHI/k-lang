@@ -13,10 +13,20 @@ type Expression interface {
 	expressionNode()
 }
 
-type CallExpression struct {
-	Function   Expression
-	Parameters []Expression
+type FnStatement struct {
+	Name      *Identifier
+	Arguments []*Identifier
+	Body      []Statement
 }
+
+func (fn *FnStatement) statementNode() {}
+
+type FunctionCall struct {
+	Function  Expression
+	Arguments []Expression
+}
+
+func (c *FunctionCall) expressionNode() {}
 
 type InfixExpression struct {
 	Left     Expression
@@ -45,7 +55,7 @@ type MakeStatement struct {
 	Value Expression
 }
 
-func (m MakeStatement) statementNode() {}
+func (m *MakeStatement) statementNode() {}
 
 type IfStatement struct {
 	Condition      Expression
@@ -53,7 +63,7 @@ type IfStatement struct {
 	FalseStatement []Statement
 }
 
-func (ifs IfStatement) statementNode() {}
+func (ifs *IfStatement) statementNode() {}
 
 type WhileStatement struct {
 	Condition Expression
