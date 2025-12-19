@@ -54,3 +54,8 @@ type IfStatement struct {
 }
 
 func (ifs IfStatement) statementNode() {}
+
+type whileStatement struct {
+	Condition  Expression
+	Statements []Statement
+}
