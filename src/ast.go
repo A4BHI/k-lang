@@ -59,3 +59,5 @@ type whileStatement struct {
 	Condition  Expression
 	Statements []Statement
 }
+
+func (while whileStatement) statementNode() {}
