@@ -1,17 +1,5 @@
 package klang
 
-type Identifier struct {
-	Value string
-}
-
-func (ident *Identifier) expressionNode() {}
-
-type IntegerLiteral struct {
-	Value int
-}
-
-func (in IntegerLiteral) expressionNode() {}
-
 type Node interface {
 	tokLiteral() string
 }
@@ -24,12 +12,25 @@ type Expression interface {
 	Node
 	expressionNode()
 }
-type CallExpression struct {
-	Function   Expression
-	Parameters Expression
+
+type Identifier struct {
+	Value string
 }
 
-type InfinixExpression struct {
+func (ident *Identifier) expressionNode() {}
+
+type IntegerLiteral struct {
+	Value int
+}
+
+func (in *IntegerLiteral) expressionNode() {}
+
+type CallExpression struct {
+	Function   Expression
+	Parameters []Expression
+}
+
+type InfixExpression struct {
 	Left     Expression
 	Operator string
 	Right    Expression
