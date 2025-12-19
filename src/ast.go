@@ -114,3 +114,16 @@ type ForStatement struct {
 }
 
 func (For *ForStatement) statementNode() {}
+
+type AssignmentStatement struct {
+	Name  *Identifier
+	Value Expression
+}
+
+func (Assignment AssignmentStatement) statementNode() {}
+
+type ReturnStatement struct {
+	Expression Expression
+}
+
+func (Return ReturnStatement) statementNode() {}
