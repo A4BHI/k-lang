@@ -1,14 +1,28 @@
 package klang
 
+import "fmt"
+
 type Parser struct {
 	l         *Lexer
-	currToken Token
-	nextToken Token
+	CurrToken Token
+	NextToken Token
 	Errors    []string
 }
 
-func (p *Parser) nexttoken() {
-	p.currToken = p.nextToken
-	p.nextToken = p.l.NextToken()
+func (p *Parser) nextToken() {
+	p.CurrToken = p.NextToken
+	p.NextToken = p.l.NextToken()
 
+}
+
+func NewParser(l *Lexer) *Parser {
+	p := &Parser{
+		l:      l,
+		Errors: []string{},
+	}
+
+	p.nextToken()
+	p.nextToken()
+	fmt.Println(p)
+	return p
 }
