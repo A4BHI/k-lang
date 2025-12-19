@@ -1,15 +1,13 @@
 package klang
 
-type Node interface {
-	tokLiteral() string
-}
+// type Node interface {
+// 	tokLiteral() string
+// }
 
 type Statement interface {
-	Node
 	statementNode()
 }
 type Expression interface {
-	Node
 	expressionNode()
 }
 
