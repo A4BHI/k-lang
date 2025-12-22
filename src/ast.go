@@ -1,8 +1,11 @@
 package klang
 
-// type Node interface {
-// 	tokLiteral() string
-// }
+//	type Node interface {
+//		tokLiteral() string
+//	}
+type Program struct {
+	Statements []Statement
+}
 
 type Statement interface {
 	statementNode()
@@ -53,10 +56,6 @@ type PostfixExpression struct {
 }
 
 func (Post *PostfixExpression) expressionNode() {}
-
-type KLANG struct {
-	Statements []Statement
-}
 
 type Identifier struct {
 	Value string
