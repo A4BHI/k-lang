@@ -17,9 +17,22 @@ func (p *Parser) parseStatements() *Program {
 	program := &Program{}
 	program.Statements = []Statement{}
 
-	for p.CurrToken.Type != EOF{
-		stmt := 
+	for p.CurrToken.Type != EOF {
+
+		stmt := p.parseStatement()
+		if stmt != nil {
+			program.Statements = append(program.Statements, stmt)
+		}
+
+		p.nextToken()
+
 	}
+
+	return program
+}
+
+func (p *Parser) parseStatement() Statement {
+	return nil
 }
 
 func NewParser(l *Lexer) *Parser {
