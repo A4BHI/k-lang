@@ -1,8 +1,5 @@
 package klang
 
-//	type Node interface {
-//		tokLiteral() string
-//	}
 type Program struct {
 	Statements []Statement
 }

@@ -13,6 +13,15 @@ func (p *Parser) nextToken() {
 
 }
 
+func (p *Parser) parseStatements() *Program {
+	program := &Program{}
+	program.Statements = []Statement{}
+
+	for p.CurrToken.Type != EOF{
+		stmt := 
+	}
+}
+
 func NewParser(l *Lexer) *Parser {
 	p := &Parser{
 		l:      l,
