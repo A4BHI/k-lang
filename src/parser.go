@@ -13,7 +13,7 @@ func (p *Parser) nextToken() {
 
 }
 
-func (p *Parser) parseStatements() *Program {
+func (p *Parser) parseProgram() *Program {
 	program := &Program{}
 	program.Statements = []Statement{}
 
