@@ -42,6 +42,7 @@ const (
 	GT        = "GT"
 	TRUE      = "TRUE"
 	FALSE     = "FALSE"
+	SEMICOLON = "SEMICOLON"
 	EOF       = "EOF"
 )
 
@@ -205,6 +206,8 @@ func (l *Lexer) NextToken() Token {
 		tok = Token{Type: LPARAN, Literal: "{"}
 	case '}':
 		tok = Token{Type: RPARAN, Literal: "}"}
+	case ';':
+		tok = Token{Type: SEMICOLON, Literal: ";"}
 	default:
 
 	}
