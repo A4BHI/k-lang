@@ -31,9 +31,17 @@ func (p *Parser) parseProgram() *Program {
 	return program
 }
 
+
 func (p *Parser) parseStatement() Statement {
-	return nil
+	switch p.CurrToken.Type{
+	case MAKE:
+		p.
+	default:
+		return nil
+	}
 }
+
+
 
 func NewParser(l *Lexer) *Parser {
 	p := &Parser{
