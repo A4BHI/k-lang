@@ -1,6 +1,8 @@
 package klang
 
-import "strconv"
+import (
+	"strconv"
+)
 
 type Parser struct {
 	l         *Lexer
@@ -91,3 +93,19 @@ func NewParser(l *Lexer) *Parser {
 
 	return p
 }
+
+// func main() {
+// 	input := "make x = 10;"
+
+// 	l := NewLexer(input)
+// 	p := NewParser(l)
+
+// 	pg := p.parseProgram()
+
+// 	fmt.Println("Errors:", p.Errors)
+// 	fmt.Printf("Program: %#v\n", pg)
+
+// 	for i, stmt := range pg.Statements {
+// 		fmt.Printf("Statement %d: %#v\n", i, stmt)
+// 	}
+// }
