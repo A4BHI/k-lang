@@ -17,13 +17,13 @@ func (p *Parser) nextToken() {
 
 }
 
-func (p *Parser) parseProgram() *Program {
+func (p *Parser) ParseProgram() *Program {
 	program := &Program{}
 	program.Statements = []Statement{}
 
 	for p.CurrToken.Type != EOF {
 
-		stmt := p.parseStatement()
+		stmt := p.ParseStatement()
 		if stmt != nil {
 			program.Statements = append(program.Statements, stmt)
 		}
@@ -35,7 +35,7 @@ func (p *Parser) parseProgram() *Program {
 	return program
 }
 
-func (p *Parser) parseStatement() Statement {
+func (p *Parser) ParseStatement() Statement {
 	switch p.CurrToken.Type {
 	case MAKE:
 		return p.parseMakeStatement()
@@ -93,19 +93,3 @@ func NewParser(l *Lexer) *Parser {
 
 	return p
 }
-
-// func main() {
-// 	input := "make x = 10;"
-
-// 	l := NewLexer(input)
-// 	p := NewParser(l)
-
-// 	pg := p.parseProgram()
-
-// 	fmt.Println("Errors:", p.Errors)
-// 	fmt.Printf("Program: %#v\n", pg)
-
-// 	for i, stmt := range pg.Statements {
-// 		fmt.Printf("Statement %d: %#v\n", i, stmt)
-// 	}
-// }
