@@ -93,14 +93,17 @@ func (p *Parser) parseExpression() Expression {
 			p.Errors = append(p.Errors, "Could not parse integer")
 			return nil
 		}
-
 		return &IntegerLiteral{Value: val}
+
 	case IDENT:
 		if p.PeekNext.Type == LBRAC {
 			return p.parseFunctionCall()
 
 		}
 		return &Identifier{Value: p.CurrToken.Literal}
+
+	case MINUS, NOT:
+		return p.parsePrefixExpression()
 
 	default:
 		return nil
@@ -136,6 +139,17 @@ func (p *Parser) parseFunctionCall() Expression {
 		p.nextToken()
 	}
 	return call
+
+}
+
+func (p *Parser) parsePrefixExpression() Expression {
+	pre := &PrefixExpression{}
+	if p.CurrToken.Type == NOT {
+		pre.Operator = p.CurrToken.Literal
+		p.nextToken()
+		pre.Expression = p.parseExpression()
+		return pre
+	}
 
 }
 
