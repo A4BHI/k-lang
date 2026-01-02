@@ -122,7 +122,16 @@ func (p *Parser) parseFunctionCall() Expression {
 		args := p.parseExpression()
 		call.Arguments = append(call.Arguments, args)
 
+		for p.PeekNext.Type == COMMA {
+			p.nextToken()
+			p.nextToken()
+
+			args := p.parseExpression()
+			call.Arguments = append(call.Arguments, args)
+		}
+
 	}
+
 }
 
 func NewParser(l *Lexer) *Parser {
