@@ -97,15 +97,16 @@ func (p *Parser) parseExpression() Expression {
 		return &IntegerLiteral{Value: val}
 	case IDENT:
 		if p.PeekNext.Type == LBRAC {
+			return p.parseFunctionCall()
 
-			fnc := &FunctionCall{}
-
-			return &FunctionCall{Function: stmt, Arguments: exp}
-		} else {
-			return &Identifier{Value: p.CurrToken.Literal}
 		}
+		return &Identifier{Value: p.CurrToken.Literal}
+
+	default:
+		return nil
 
 	}
+
 }
 
 func (p *Parser) parseFunctionCall() Expression {
