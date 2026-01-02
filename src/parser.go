@@ -82,10 +82,17 @@ func (p *Parser) parseMakeStatement() *MakeStatement {
 	return stmt
 }
 
-func (p *Parser) parseExpressionStatement() *ExpressionStatement{
+func (p *Parser) parseExpressionStatement() *ExpressionStatement {
 	stmt := &ExpressionStatement{}
-	p.nextToken()
-	if p.CurrToken.Type != E
+	stmt.Expression = p.parseExpression()
+	if p.PeekNext.Type == SEMICOLON {
+		p.nextToken()
+	}
+	return stmt
+}
+
+func (p *Parser) parseExpression() Expression {
+
 }
 
 func NewParser(l *Lexer) *Parser {
