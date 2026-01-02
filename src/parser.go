@@ -110,7 +110,19 @@ func (p *Parser) parseExpression() Expression {
 }
 
 func (p *Parser) parseFunctionCall() Expression {
+	call := &FunctionCall{}
 
+	call.Function = &Identifier{Value: p.CurrToken.Literal}
+	p.nextToken()
+	p.nextToken()
+
+	call.Arguments = []Expression{}
+
+	if p.PeekNext.Type != RBRAC {
+		args := p.parseExpression()
+		call.Arguments = append(call.Arguments, args)
+
+	}
 }
 
 func NewParser(l *Lexer) *Parser {
