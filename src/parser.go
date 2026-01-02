@@ -132,6 +132,11 @@ func (p *Parser) parseFunctionCall() Expression {
 
 	}
 
+	if p.PeekNext.Type == RBRAC {
+		p.nextToken()
+	}
+	return call
+
 }
 
 func NewParser(l *Lexer) *Parser {
