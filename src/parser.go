@@ -40,7 +40,7 @@ func (p *Parser) ParseStatement() Statement {
 	case MAKE:
 		return p.parseMakeStatement()
 	default:
-		return nil
+		return p.parseExpressionStatement()
 	}
 }
 
