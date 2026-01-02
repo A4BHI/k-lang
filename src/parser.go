@@ -144,21 +144,10 @@ func (p *Parser) parseFunctionCall() Expression {
 
 func (p *Parser) parsePrefixExpression() Expression {
 	pre := &PrefixExpression{}
-	if p.CurrToken.Type == NOT {
-		pre.Operator = p.CurrToken.Literal
-		p.nextToken()
-		pre.Expression = p.parseExpression()
-		return pre
-	}
-
-	if p.CurrToken.Type == MINUS {
-		pre.Operator = p.CurrToken.Literal
-		p.nextToken()
-		pre.Expression = p.parseExpression()
-		return pre
-	}
-
-	return nil
+	pre.Operator = p.CurrToken.Literal
+	p.nextToken()
+	pre.Expression = p.parseExpression()
+	return pre
 
 }
 
