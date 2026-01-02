@@ -43,6 +43,7 @@ const (
 	TRUE      = "TRUE"
 	FALSE     = "FALSE"
 	SEMICOLON = "SEMICOLON"
+	COMMA     = "COMMA"
 	EOF       = "EOF"
 )
 
@@ -208,6 +209,8 @@ func (l *Lexer) NextToken() Token {
 		tok = Token{Type: RPARAN, Literal: "}"}
 	case ';':
 		tok = Token{Type: SEMICOLON, Literal: ";"}
+	case ',':
+		tok = Token{Type: COMMA, Literal: ","}
 	default:
 
 	}
