@@ -151,6 +151,15 @@ func (p *Parser) parsePrefixExpression() Expression {
 		return pre
 	}
 
+	if p.CurrToken.Type == MINUS {
+		pre.Operator = p.CurrToken.Literal
+		p.nextToken()
+		pre.Expression = p.parseExpression()
+		return pre
+	}
+
+	return nil
+
 }
 
 func NewParser(l *Lexer) *Parser {
