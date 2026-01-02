@@ -62,19 +62,13 @@ func (p *Parser) parseMakeStatement() *MakeStatement {
 	}
 
 	p.nextToken()
-	switch p.CurrToken.Type {
-	case INT:
-		v, err := strconv.Atoi(p.CurrToken.Literal)
-		if err != nil {
-			p.Errors = append(p.Errors, "Error cant convert INT")
-			return nil
-		}
-		stmt.Value = &IntegerLiteral{Value: v}
-
-	default:
-		p.Errors = append(p.Errors, "expected expression after =")
+	expr := p.parseExpression()
+	if expr == nil {
+		p.Errors = append(p.Errors, "Unknown Expression")
 		return nil
 	}
+
+	stmt.Value = expr
 	if p.PeekNext.Type == SEMICOLON {
 		p.nextToken()
 	}
