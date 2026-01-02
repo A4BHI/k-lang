@@ -92,7 +92,18 @@ func (p *Parser) parseExpressionStatement() *ExpressionStatement {
 }
 
 func (p *Parser) parseExpression() Expression {
+	switch p.CurrToken.Type {
+	case INT:
+		val, err := strconv.Atoi(p.CurrToken.Literal)
+		if err != nil {
+			p.Errors = append(p.Errors, "Could not parse integer")
+			return nil
+		}
 
+		return &IntegerLiteral{Value: val}
+	case IDENT:
+
+	}
 }
 
 func NewParser(l *Lexer) *Parser {
