@@ -82,6 +82,12 @@ func (p *Parser) parseMakeStatement() *MakeStatement {
 	return stmt
 }
 
+func (p *Parser) parseExpressionStatement() *ExpressionStatement{
+	stmt := &ExpressionStatement{}
+	p.nextToken()
+	if p.CurrToken.Type != E
+}
+
 func NewParser(l *Lexer) *Parser {
 	p := &Parser{
 		l:      l,
