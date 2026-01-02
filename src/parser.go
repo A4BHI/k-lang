@@ -96,6 +96,27 @@ func (p *Parser) parseExpression() Expression {
 
 		return &IntegerLiteral{Value: val}
 	case IDENT:
+		if p.PeekNext.Type == LBRAC {
+			
+			fnc := &FunctionCall{}
+			stmt := p.parseExpression()
+			var exp Expression
+			fnc.Function = stmt
+			p.nextToken()
+			if p.PeekNext.Type == RBRAC {
+				p.nextToken()
+
+			}else{
+				p.nextToken()
+				exp=p.parseExpression()
+			}
+			if p.PeekNext.Type=SEMICOLON{
+				p.nextToken()
+			}
+			return &FunctionCall{Function: stmt, Arguments:exp }
+		} else {
+			return &Identifier{Value: p.CurrToken.Literal}
+		}
 
 	}
 }
