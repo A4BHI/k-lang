@@ -11,6 +11,20 @@ type Parser struct {
 	Errors    []string
 }
 
+const (
+	LOWEST = iota
+	SUM
+	PRODUCT
+	PREFIX
+)
+
+var precedence = map[string]int{
+	PLUS:  SUM,
+	MINUS: SUM,
+	MULT:  PRODUCT,
+	DIV:   PRODUCT,
+}
+
 func (p *Parser) nextToken() {
 	p.CurrToken = p.PeekNext
 	p.PeekNext = p.l.NextToken()
