@@ -15,7 +15,8 @@ func main() {
 
 	fmt.Println(ms.Name.Value)
 	fmt.Println(ms.Value.(*klang.FunctionCall).Function)
-	// fmt.Println(ms.Value.(*klang.FunctionCall).Arguments.(*klang.IntegerLiteral).Value)
+	fmt.Println(ms.Value.(*klang.FunctionCall).Arguments[0].(*klang.IntegerLiteral).Value)
+	fmt.Println(ms.Value.(*klang.FunctionCall).Arguments[1].(*klang.IntegerLiteral).Value)
 
 	for i, stmt := range pg.Statements {
 		fmt.Printf("Statement: %d: %#v\n", i, stmt)
