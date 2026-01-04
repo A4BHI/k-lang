@@ -100,6 +100,7 @@ func (p *Parser) parseExpressionStatement() *ExpressionStatement {
 }
 
 func (p *Parser) parseExpression() Expression {
+	var l Expression
 	switch p.CurrToken.Type {
 	case INT:
 		val, err := strconv.Atoi(p.CurrToken.Literal)
@@ -107,22 +108,24 @@ func (p *Parser) parseExpression() Expression {
 			p.Errors = append(p.Errors, "Could not parse integer")
 			return nil
 		}
-		return &IntegerLiteral{Value: val}
+		l = &IntegerLiteral{Value: val}
 
 	case IDENT:
 		if p.PeekNext.Type == LBRAC {
-			return p.parseFunctionCall()
+			l = p.parseFunctionCall()
 
 		}
-		return &Identifier{Value: p.CurrToken.Literal}
+		l = &Identifier{Value: p.CurrToken.Literal}
 
 	case MINUS, NOT:
-		return p.parsePrefixExpression()
+		l = p.parsePrefixExpression()
 
 	default:
 		return nil
 
 	}
+
+	return l
 
 }
 
