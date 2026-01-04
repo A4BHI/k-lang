@@ -129,6 +129,14 @@ func (p *Parser) parseExpression() Expression {
 
 }
 
+func (p *Parser) peekPrecedence() int {
+	return precedence[p.PeekNext.Type]
+}
+
+func (p *Parser) currPrecedence() int {
+	return precedence[p.CurrToken.Type]
+}
+
 func (p *Parser) parseFunctionCall() Expression {
 	call := &FunctionCall{}
 
