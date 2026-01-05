@@ -128,6 +128,10 @@ func (p *Parser) parseExpression() Expression {
 	if p.PeekNext.Type == SEMICOLON {
 		return l
 	}
+	var infix InfixExpression
+	if p.currPrecedence() < p.peekPrecedence() {
+		infix.Left = p.CurrToken.Type
+	}
 
 	return l
 
