@@ -130,7 +130,10 @@ func (p *Parser) parseExpression() Expression {
 	}
 	var infix InfixExpression
 	if p.currPrecedence() < p.peekPrecedence() {
-		infix.Left = p.CurrToken.Type
+		infix.Left = p.parseExpression()
+		p.nextToken()
+		infix.Operator = p.CurrToken.Type
+
 	}
 
 	return l
