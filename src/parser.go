@@ -125,6 +125,10 @@ func (p *Parser) parseExpression() Expression {
 
 	}
 
+	if p.PeekNext.Type == SEMICOLON {
+		return l
+	}
+
 	return l
 
 }
