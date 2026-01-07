@@ -114,8 +114,10 @@ func (p *Parser) parseExpression() Expression {
 		if p.PeekNext.Type == LBRAC {
 			l = p.parseFunctionCall()
 
+		} else {
+			l = &Identifier{Value: p.CurrToken.Literal}
+
 		}
-		l = &Identifier{Value: p.CurrToken.Literal}
 
 	case MINUS, NOT:
 		l = p.parsePrefixExpression()
