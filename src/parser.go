@@ -131,8 +131,9 @@ func (p *Parser) parseExpression() Expression {
 		return l
 	}
 	var infix InfixExpression
+
 	if p.currPrecedence() < p.peekPrecedence() {
-		infix.Left = p.parseExpression()
+		infix.Left = l
 		p.nextToken()
 		infix.Operator = p.CurrToken.Type
 
