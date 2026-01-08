@@ -145,7 +145,12 @@ func (p *Parser) parseExpression(precedence int) Expression {
 }
 
 func (p *Parser) peekPrecedence() int {
-	return precedence[p.PeekNext.Type]
+	ok := precedence[p.PeekNext.Type]
+	if ok == 0 {
+		return LOWEST
+	}
+
+	return ok
 }
 
 func (p *Parser) currPrecedence() int {
