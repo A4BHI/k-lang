@@ -131,9 +131,9 @@ func (p *Parser) parseExpression(precedence int) Expression {
 		return l
 	}
 	var infix InfixExpression
+	infix.Left = l
 	for p.PeekNext.Type != SEMICOLON {
 		if p.currPrecedence() < p.peekPrecedence() {
-			infix.Left = l
 			p.nextToken()
 			infix.Operator = p.CurrToken.Type
 
