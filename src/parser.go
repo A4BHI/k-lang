@@ -76,7 +76,7 @@ func (p *Parser) parseMakeStatement() *MakeStatement {
 	}
 
 	p.nextToken()
-	expr := p.parseExpression()
+	expr := p.parseExpression(LOWEST)
 	if expr == nil {
 		p.Errors = append(p.Errors, "Unknown Expression")
 		return nil
@@ -99,7 +99,7 @@ func (p *Parser) parseExpressionStatement() *ExpressionStatement {
 	return stmt
 }
 
-func (p *Parser) parseExpression() Expression {
+func (p *Parser) parseExpression(precedence int) Expression {
 	var l Expression
 	switch p.CurrToken.Type {
 	case INT:
