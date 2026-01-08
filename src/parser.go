@@ -92,7 +92,7 @@ func (p *Parser) parseMakeStatement() *MakeStatement {
 
 func (p *Parser) parseExpressionStatement() *ExpressionStatement {
 	stmt := &ExpressionStatement{}
-	stmt.Expression = p.parseExpression()
+	stmt.Expression = p.parseExpression(LOWEST)
 	if p.PeekNext.Type == SEMICOLON {
 		p.nextToken()
 	}
@@ -162,14 +162,14 @@ func (p *Parser) parseFunctionCall() Expression {
 	call.Arguments = []Expression{}
 
 	if p.PeekNext.Type != RBRAC {
-		args := p.parseExpression()
+		args := p.parseExpression(LOWEST)
 		call.Arguments = append(call.Arguments, args)
 
 		for p.PeekNext.Type == COMMA {
 			p.nextToken()
 			p.nextToken()
 
-			args := p.parseExpression()
+			args := p.parseExpression(LOWEST)
 			call.Arguments = append(call.Arguments, args)
 		}
 
@@ -186,7 +186,7 @@ func (p *Parser) parsePrefixExpression() Expression {
 	pre := &PrefixExpression{}
 	pre.Operator = p.CurrToken.Literal
 	p.nextToken()
-	pre.Expression = p.parseExpression()
+	pre.Expression = p.parseExpression(LOWEST)
 	return pre
 
 }
